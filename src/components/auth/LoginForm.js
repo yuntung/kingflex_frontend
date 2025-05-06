@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Auth.css';
 
-export const LoginForm = ({ onClose, onForgotPassword }) => {
+export const LoginForm = ({ onClose, onForgotPassword, onVerification }) => {
   const [formData, setFormData] = useState({ 
     email: '', 
     password: '' 
