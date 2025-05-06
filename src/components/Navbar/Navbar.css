@@ -1,0 +1,155 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Logo styling */
+.navbar-logo img {
+  height: 45px;
+}
+
+/* User section container */
+.navbar-user-section {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Company name text */
+.company-name {
+  color: #333333;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* User icons container */
+.navbar-user-icons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Common button styles */
+.login-btn, 
+.signup-btn,
+.admin-btn, 
+.logout-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Login button specific styles */
+.login-btn {
+  background-color: #FFFFFF;
+  border: 1px solid #F8AB47;
+  color: #F8AB47;
+}
+
+.login-btn:hover {
+  background-color: #F8AB47;
+  color: #FFFFFF;
+}
+
+/* Sign up button specific styles */
+.signup-btn {
+  background-color: #F8AB47;
+  color: #FFFFFF;
+}
+
+.signup-btn:hover {
+  background-color: #e09535;
+}
+
+/* Admin and logout button styles */
+.admin-btn, 
+.logout-btn {
+  background-color: #F8AB47;
+  color: #FFFFFF;
+}
+
+.admin-btn:hover, 
+.logout-btn:hover {
+  background-color: #e09535;
+}
+
+/* User info container */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-logo img {
+    height: 40px;
+  }
+
+  .navbar-user-section {
+    gap: 0.75rem;
+  }
+
+  .company-name {
+    font-size: 0.9rem;
+  }
+
+  .admin-btn, 
+  .logout-btn, 
+  .login-btn, 
+  .signup-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+    min-width: 90px;
+  }
+
+  .navbar-user-icons {
+    gap: 0.75rem;
+  }
+}
+
+/* Small screen adjustments */
+@media screen and (max-width: 480px) {
+  .navbar {
+    flex-direction: row; /* 改回橫向排列 */
+    padding: 0.5rem;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
+  .navbar-logo img {
+    height: 35px;
+  }
+
+  .navbar-user-section {
+    width: auto; /* 移除寬度限制 */
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+
+
+}
