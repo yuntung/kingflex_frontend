@@ -77,7 +77,7 @@ const ProductManagement = () => {
 
             const productToAdd = {
                 ...newProduct,
-                type: productType
+                type: ['normal', '152mm', 'shared'].includes(activeTab) ? activeTab : 'normal'
             };
 
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products`, {
