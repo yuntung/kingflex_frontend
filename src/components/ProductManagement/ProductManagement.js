@@ -39,32 +39,35 @@ const ProductManagement = () => {
             setLoading(true);
             setError('');
             
-            // 打印調試信息
             console.log(`開始載入產品，類型: ${type}，用戶狀態:`, user);
             
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products?type=${type}`, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    // 加入 Authorization 頭以確保認證傳遞
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Content-Type': 'application/json'
                 },
-                credentials: 'include' // 同時保留 credentials: 'include'
+                credentials: 'include'  // 確保包含cookie
             });
             
-            // 打印調試信息
             console.log('產品API響應狀態:', response.status);
             
             if (!response.ok) {
-                const errorData = await response.json().catch(e => ({ message: `HTTP錯誤 ${response.status}` }));
-                throw new Error(errorData.message || `Failed to fetch products. Status: ${response.status}`);
+                let errorMessage = `HTTP error ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorMessage;
+                } catch (e) {
+                    // 無法解析JSON
+                }
+                throw new Error(errorMessage);
             }
     
             const data = await response.json();
+            console.log('成功獲取產品數據:', data.length, '項');
             setProducts(data);
         } catch (err) {
-            console.error('Load products error:', err);
-            setError(err.message);
+            console.error('產品載入錯誤:', err);
+            setError(err.message || '無法載入產品');
         } finally {
             setLoading(false);
         }
