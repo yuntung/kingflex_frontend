@@ -39,9 +39,9 @@ const ProductManagement = () => {
             setLoading(true);
             setError('');
             
-            const response = await fetch(`/api/products?type=${type}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products?type=${type}`, {
                 credentials: 'include'
-            });
+              });
             
             if (!response.ok) {
                 const errorData = await response.json();
@@ -74,14 +74,14 @@ const ProductManagement = () => {
                 type: activeTab
             };
 
-            const response = await fetch('/api/products', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                  'Content-Type': 'application/json',
                 },
                 credentials: 'include',
                 body: JSON.stringify(productToAdd),
-            });
+              });
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -118,14 +118,14 @@ const ProductManagement = () => {
             setLoading(true);
             setError('');
 
-            const response = await fetch(`/api/products/${editingProduct.id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${editingProduct.id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
+                  'Content-Type': 'application/json',
                 },
                 credentials: 'include',
                 body: JSON.stringify(editingProduct),
-            });
+              });
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -155,10 +155,10 @@ const ProductManagement = () => {
             setLoading(true);
             setError('');
 
-            const response = await fetch(`/api/products/${productId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products/${productId}`, {
                 method: 'DELETE',
                 credentials: 'include'
-            });
+              });
 
             if (!response.ok) {
                 const errorData = await response.json();

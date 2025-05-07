@@ -20,17 +20,17 @@ const VerifyAccount = ({ email, onVerified, onClose }) => {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-        const response = await fetch('/api/auth/verify-email/verify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                verificationCode
-            }),
-            credentials: 'include'
-        });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/verify-email/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          verificationCode
+        }),
+        credentials: 'include'
+      });
 
         const data = await response.json();
 
@@ -49,7 +49,7 @@ const VerifyAccount = ({ email, onVerified, onClose }) => {
   const handleResendCode = async () => {
     setIsResending(true);
     try {
-      const response = await fetch('/api/auth/verify-email/send', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/verify-email/send`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

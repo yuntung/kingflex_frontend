@@ -51,7 +51,7 @@ const AdminRegistration = ({ onVerification, onClose ,onModeChange }) => {
     // }
 
     try {
-      const response = await fetch('/api/auth/register-admin', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register-admin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

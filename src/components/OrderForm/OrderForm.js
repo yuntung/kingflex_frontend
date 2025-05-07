@@ -55,7 +55,7 @@ const OrderForm = () => {
       setError('');
   
       const fetchProductsByType = async (type) => {
-        const response = await fetch(`/api/products?type=${type}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products?type=${type}`, {
           credentials: 'include'
         });
         
@@ -314,7 +314,7 @@ const OrderForm = () => {
         isGuestOrder: !user
       };
 
-      const response = await fetch('/api/orders', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

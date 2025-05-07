@@ -38,7 +38,7 @@ const ResetPassword = ({ email, onReset, onBack }) => {
     
     try {
       // 修改驗證碼驗證的 API 路徑
-      const verifyResponse = await fetch('/api/auth/reset-password/verify-code', {
+      const verifyResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/reset-password/verify-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const ResetPassword = ({ email, onReset, onBack }) => {
       }
 
       // 修改重置密碼的 API 路徑
-      const resetResponse = await fetch('/api/auth/reset-password/reset', {
+      const resetResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/reset-password/reset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
