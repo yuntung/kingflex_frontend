@@ -39,52 +39,53 @@ const AdminRegistration = ({ onVerification, onClose ,onModeChange }) => {
     } 
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setLoading(false);
-      return;
+        setError('Passwords do not match');
+        setLoading(false);
+        return;
     }
-
-    // if (formData.password.length < 8) {
-    //   setError('Password must be at least 8 characters');
-    //   setLoading(false);
-    //   return;
-    // }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register-admin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          adminCode: formData.adminCode,
-          companyName: formData.companyName
-        }),
-      });
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register-admin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // 確保包含認證信息
+            body: JSON.stringify({
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                adminCode: formData.adminCode,
+                companyName: formData.companyName
+            }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
+        console.log('Admin registration response:', data); // 調試用
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
-      }
-
-      if (data.success) {
-
-        if (onModeChange) {
-          onModeChange('login');
+        if (!response.ok) {
+            throw new Error(data.message || 'Registration failed');
         }
-      } else if (data.requireVerification) {
-        onVerification(data.email);
-      }
+
+        // 如果回傳了token，保存它
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            console.log('Admin token saved');
+        }
+
+        if (data.success) {
+            if (onModeChange) {
+                onModeChange('login');
+            }
+        } else if (data.requireVerification) {
+            onVerification(data.email);
+        }
     } catch (err) {
-      setError(err.message || 'Failed to register. Please try again.');
+        setError(err.message || 'Failed to register. Please try again.');
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   const togglePasswordVisibility = (field) => {
     setShowPassword(prev => ({

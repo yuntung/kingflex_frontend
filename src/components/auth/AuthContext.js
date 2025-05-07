@@ -30,30 +30,38 @@ export const AuthProvider = ({ children }) => {
             companyName: userData.companyName || '',
             role: userData.role || 'user'
         };
+        
+        // 新增: 從響應中提取token並保存
+        if (userData.token) {
+            localStorage.setItem('token', userData.token);
+            console.log('Token已保存到localStorage');
+        } else {
+            console.warn('警告: 登入響應中沒有token');
+        }
+        
         setUser(formattedUser);
         // 保存到 localStorage
         localStorage.setItem('user', JSON.stringify(formattedUser));
-        
-        // 增加日誌，檢查用戶角色
-        console.log('User role set to:', formattedUser.role);
+        console.log('用戶角色設置為:', formattedUser.role);
     }
 };
 
-  const logout = async () => {
-    try {
+const logout = async () => {
+  try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
-        method: 'POST',
-        credentials: 'include'
+          method: 'POST',
+          credentials: 'include'
       });
       console.log('Logout response:', response.status);
-    } catch (error) {
+  } catch (error) {
       console.error('Logout error:', error);
-    } finally {
-      // 清除 localStorage
+  } finally {
+      // 清除 localStorage 中的所有認證相關項目
       localStorage.removeItem('user');
+      localStorage.removeItem('token'); // 新增: 確保清除token
       setUser(null);
-    }
-  };
+  }
+};
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>

@@ -39,19 +39,27 @@ const ProductManagement = () => {
             setLoading(true);
             setError('');
             
+            // 打印調試信息
+            console.log(`開始載入產品，類型: ${type}，用戶狀態:`, user);
+            
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products?type=${type}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    // 加入 Authorization 頭以確保認證傳遞
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
-                credentials: 'include'  // 這確保所有請求都帶上 cookies，包括認證token
+                credentials: 'include' // 同時保留 credentials: 'include'
             });
             
+            // 打印調試信息
+            console.log('產品API響應狀態:', response.status);
+            
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to fetch products');
+                const errorData = await response.json().catch(e => ({ message: `HTTP錯誤 ${response.status}` }));
+                throw new Error(errorData.message || `Failed to fetch products. Status: ${response.status}`);
             }
-
+    
             const data = await response.json();
             setProducts(data);
         } catch (err) {
