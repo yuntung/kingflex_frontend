@@ -23,18 +23,21 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => {
     console.log('Login called with:', userData);
     if (userData && userData.id) {
-      const formattedUser = {
-        id: userData.id,
-        username: userData.username,
-        email: userData.email,
-        companyName: userData.companyName || '',
-        role: userData.role || 'user'
-      };
-      setUser(formattedUser);
-      // 保存到 localStorage
-      localStorage.setItem('user', JSON.stringify(formattedUser));
+        const formattedUser = {
+            id: userData.id,
+            username: userData.username,
+            email: userData.email,
+            companyName: userData.companyName || '',
+            role: userData.role || 'user'
+        };
+        setUser(formattedUser);
+        // 保存到 localStorage
+        localStorage.setItem('user', JSON.stringify(formattedUser));
+        
+        // 增加日誌，檢查用戶角色
+        console.log('User role set to:', formattedUser.role);
     }
-  };
+};
 
   const logout = async () => {
     try {

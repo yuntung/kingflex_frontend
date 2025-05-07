@@ -40,8 +40,12 @@ const ProductManagement = () => {
             setError('');
             
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products?type=${type}`, {
-                credentials: 'include'
-              });
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'  // 這確保所有請求都帶上 cookies，包括認證token
+            });
             
             if (!response.ok) {
                 const errorData = await response.json();
