@@ -64,13 +64,20 @@ const ProductManagement = () => {
             return;
         }
 
+          // 確保類型值有效
+  let productType = activeTab;
+  if (!['normal', '152mm', 'shared'].includes(productType)) {
+    alert('Invalid product type: ' + productType);
+    return;
+  }
+
         try {
             setLoading(true);
             setError('');
 
             const productToAdd = {
                 ...newProduct,
-                type: activeTab
+                type: productType
             };
 
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products`, {
