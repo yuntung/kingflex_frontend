@@ -20,14 +20,13 @@ export const LoginForm = ({ onClose, onForgotPassword, onVerification }) => {
     setError('');
 
     try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include', // 重要: 需要包含認證信息
-            body: JSON.stringify(formData)
-        });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
 
         const data = await response.json();
 
@@ -38,15 +37,6 @@ export const LoginForm = ({ onClose, onForgotPassword, onVerification }) => {
                 return;
             }
             throw new Error(data.message);
-        }
-
-        // 檢查並顯示data內容，調試用
-        console.log('Login response data:', data);
-        
-        // 確保從響應中獲取token（如果有）
-        if (data.token) {
-            localStorage.setItem('token', data.token);
-            console.log('Token已保存');
         }
 
         login(data.user);

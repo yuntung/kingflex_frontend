@@ -23,45 +23,34 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => {
     console.log('Login called with:', userData);
     if (userData && userData.id) {
-        const formattedUser = {
-            id: userData.id,
-            username: userData.username,
-            email: userData.email,
-            companyName: userData.companyName || '',
-            role: userData.role || 'user'
-        };
-        
-        // 新增: 從響應中提取token並保存
-        if (userData.token) {
-            localStorage.setItem('token', userData.token);
-            console.log('Token已保存到localStorage');
-        } else {
-            console.warn('警告: 登入響應中沒有token');
-        }
-        
-        setUser(formattedUser);
-        // 保存到 localStorage
-        localStorage.setItem('user', JSON.stringify(formattedUser));
-        console.log('用戶角色設置為:', formattedUser.role);
+      const formattedUser = {
+        id: userData.id,
+        username: userData.username,
+        email: userData.email,
+        companyName: userData.companyName || '',
+        role: userData.role || 'user'
+      };
+      setUser(formattedUser);
+      // 保存到 localStorage
+      localStorage.setItem('user', JSON.stringify(formattedUser));
     }
-};
+  };
 
-const logout = async () => {
-  try {
+  const logout = async () => {
+    try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
-          method: 'POST',
-          credentials: 'include'
+        method: 'POST',
+        credentials: 'include'
       });
       console.log('Logout response:', response.status);
-  } catch (error) {
+    } catch (error) {
       console.error('Logout error:', error);
-  } finally {
-      // 清除 localStorage 中的所有認證相關項目
+    } finally {
+      // 清除 localStorage
       localStorage.removeItem('user');
-      localStorage.removeItem('token'); // 新增: 確保清除token
       setUser(null);
-  }
-};
+    }
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>

@@ -1,4 +1,3 @@
-// ProductManagement.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -39,35 +38,20 @@ const ProductManagement = () => {
             setLoading(true);
             setError('');
             
-            console.log(`開始載入產品，類型: ${type}，用戶狀態:`, user);
-            
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/products?type=${type}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'  // 確保包含cookie
-            });
-            
-            console.log('產品API響應狀態:', response.status);
+                credentials: 'include'
+              });
             
             if (!response.ok) {
-                let errorMessage = `HTTP error ${response.status}`;
-                try {
-                    const errorData = await response.json();
-                    errorMessage = errorData.message || errorMessage;
-                } catch (e) {
-                    // 無法解析JSON
-                }
-                throw new Error(errorMessage);
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch products');
             }
-    
+
             const data = await response.json();
-            console.log('成功獲取產品數據:', data.length, '項');
             setProducts(data);
         } catch (err) {
-            console.error('產品載入錯誤:', err);
-            setError(err.message || '無法載入產品');
+            console.error('Load products error:', err);
+            setError(err.message);
         } finally {
             setLoading(false);
         }
